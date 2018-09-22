@@ -29,11 +29,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.teamtreehouse.stormy.databinding.ActivityMainBinding;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private CurrentWeather currentWeather = new CurrentWeather();
+    private WeeklyWeather weeklyWeather = new WeeklyWeather();
 
     private ImageView iconImageView;
 
@@ -207,6 +213,17 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
+                        weeklyWeather = getWeeklyDetails(jsonData);
+
+                        final WeeklyWeather displayWeeklyWeather = new WeeklyWeather(
+                                weeklyWeather.getCurrentWeatherSecondDay(),
+                                weeklyWeather.getCurrentWeatherThirdDay(),
+                                weeklyWeather.getCurrentWeatherFourthDay(),
+                                weeklyWeather.getCurrentWeatherFifthDay()
+                        );
+
+                        binding.setWeatherWeekly(weeklyWeather);
+
                         if (!response.isSuccessful()) {
                             alertUserAboutError();
                         }
@@ -226,10 +243,16 @@ public class MainActivity extends AppCompatActivity {
         String timezone = forecast.getString("timezone");
         Log.i(TAG, "From JSON: " + timezone);
 
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+
+        String dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
+
         JSONObject currently = forecast.getJSONObject("currently");
 
         CurrentWeather currentWeather = new CurrentWeather();
 
+        currentWeather.setDayOfWeek(dayOfWeek);
         currentWeather.setLocationLabel(locationName);
         currentWeather.setTime(currently.getLong("time"));
         currentWeather.setIcon(currently.getString("icon"));
@@ -243,6 +266,65 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "From JSON: " +  currentTime);
 
         return currentWeather;
+    }
+
+    private CurrentWeather getWeekDayDetails(String jsonData) throws JSONException{
+        JSONObject forecast = new JSONObject(jsonData);
+
+        CurrentWeather currentWeather = new CurrentWeather();
+
+        currentWeather.setIcon(forecast.getString("icon"));
+        currentWeather.setSummary(forecast.getString("summary"));
+        currentWeather.setTempMax(forecast.getDouble("temperatureHigh"));
+        currentWeather.setTempMin(forecast.getDouble("temperatureLow"));
+        currentWeather.setPrecipChance(forecast.getDouble("precipProbability"));
+        currentWeather.setHumidity(forecast.getDouble("humidity"));
+
+        return currentWeather;
+    }
+
+    private WeeklyWeather getWeeklyDetails(String jsonData) throws JSONException{
+        JSONObject forecast = new JSONObject(jsonData);
+
+        JSONObject daily = forecast.getJSONObject("daily");
+        JSONArray data = daily.getJSONArray("data");
+
+        WeeklyWeather weeklyWeather = new WeeklyWeather();
+
+        //Add a day of the week to every currentWeather object
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
+        Date date = calendar.getTime();
+
+        String dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
+
+        weeklyWeather.setCurrentWeatherSecondDay(getWeekDayDetails(data.get(0).toString()));
+        weeklyWeather.getCurrentWeatherSecondDay().setDayOfWeek(dayOfWeek);
+        Log.i(TAG, "Got second day's details (" + dayOfWeek + ")");
+
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
+        date = calendar.getTime();
+        dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
+        weeklyWeather.setCurrentWeatherThirdDay(getWeekDayDetails(data.get(1).toString()));
+        weeklyWeather.getCurrentWeatherThirdDay().setDayOfWeek(dayOfWeek);
+        Log.i(TAG, "Got third day's details (" + dayOfWeek + ")");
+
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
+        date = calendar.getTime();
+        dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
+        weeklyWeather.setCurrentWeatherFourthDay(getWeekDayDetails(data.get(2).toString()));
+        weeklyWeather.getCurrentWeatherFourthDay().setDayOfWeek(dayOfWeek);
+        Log.i(TAG, "Got fourth day's details (" + dayOfWeek + ")");
+
+        calendar.add(Calendar.DAY_OF_WEEK, 1);
+        date = calendar.getTime();
+        dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
+        weeklyWeather.setCurrentWeatherFifthDay(getWeekDayDetails(data.get(3).toString()));
+        weeklyWeather.getCurrentWeatherFifthDay().setDayOfWeek(dayOfWeek);
+        Log.i(TAG, "Got fifth day's details (" + dayOfWeek + ")");
+
+        return weeklyWeather;
     }
 
     private boolean isNetworkAvailable() {

@@ -10,10 +10,14 @@ public class CurrentWeather {
     private String icon;
     private long time;
     private double temperature;
+    private double tempMax;
+    private double tempMin;
     private double humidity;
     private double precipChance;
     private String summary;
     private String timezone;
+
+    private String dayOfWeek;
 
     public CurrentWeather() {
     }
@@ -31,6 +35,30 @@ public class CurrentWeather {
     }
 
     /*---Getters and setters-----*/
+
+    public double getTempMax() {
+        return tempMax;
+    }
+
+    public void setTempMax(double tempMax) {
+        this.tempMax = tempMax;
+    }
+
+    public double getTempMin() {
+        return tempMin;
+    }
+
+    public void setTempMin(double tempMin) {
+        this.tempMin = tempMin;
+    }
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 
     public String getTimezone() {
         return timezone;
