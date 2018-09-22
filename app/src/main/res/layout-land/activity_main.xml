@@ -8,189 +8,438 @@
             type="com.teamtreehouse.stormy.WeeklyWeather">
         </variable>
     </data>
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/appBackground"
-    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/temperatureValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@{String.valueOf(Math.round(weather.temperature)), default=`100`}"
-        android:textColor="@android:color/white"
-        android:textSize="150sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/appBackground"
+        tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/degreeImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="35dp"
-        app:layout_constraintStart_toEndOf="@+id/temperatureValue"
-        app:layout_constraintTop_toTopOf="@+id/temperatureValue"
-        app:srcCompat="@drawable/degree" />
+        <ImageView
+            android:id="@+id/degreeMaxTodayImage"
+            android:layout_width="18dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/maxTempToday"
+            app:layout_constraintTop_toTopOf="@+id/maxTempToday"
+            app:srcCompat="@drawable/degree" />
 
-    <TextView
-        android:id="@+id/timeValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@{`Às ` + String.valueOf(weather.formattedTime) + ` serão`, default=`Às 5:00 da tarde serão`}"
-        android:textColor="@color/half_white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/temperatureValue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/todayLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="28dp"
+            android:text="Hoje"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/locationLabel" />
 
-    <TextView
-        android:id="@+id/locationValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@{weather.locationLabel}"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/timeValue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.16" />
 
-    <ImageView
-        android:id="@+id/iconImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/locationValue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/cloudy_night" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.33" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6569343" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66" />
 
-    <TextView
-        android:id="@+id/humidityLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:paddingTop="15dp"
-        android:text="HUMIDADE"
-        android:textColor="@color/half_white"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/temperatureValue" />
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.83" />
 
-    <TextView
-        android:id="@+id/humidityValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@{String.valueOf(weather.humidity), default=`0.88`}"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/humidityLabel"
-        app:layout_constraintStart_toStartOf="@+id/humidityLabel"
-        app:layout_constraintTop_toBottomOf="@+id/humidityLabel" />
+        <TextView
+            android:id="@+id/locationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="22dp"
+            android:text="Condeixa-a-nova"
+            android:textColor="@color/half_white"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/precipLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:paddingTop="15dp"
-        android:text="CHUVA/NEVE"
-        android:textColor="@color/half_white"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/temperatureValue" />
+        <TextView
+            android:id="@+id/maxTempToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="18dp"
+            android:text="28"
+            android:textColor="@android:color/white"
+            android:textSize="42sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/todayLabel" />
 
-    <TextView
-        android:id="@+id/precipValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@{String.valueOf(Math.round(weather.precipChance*100)) + `%`, default=`50%`}"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/precipLabel"
-        app:layout_constraintStart_toStartOf="@+id/precipLabel"
-        app:layout_constraintTop_toBottomOf="@+id/precipLabel" />
+        <ImageView
+            android:id="@+id/degreeTodayImage"
+            android:layout_width="18dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/maxTempToday"
+            app:layout_constraintTop_toTopOf="@+id/maxTempToday"
+            app:srcCompat="@drawable/degree" />
 
-    <TextView
-        android:id="@+id/summaryValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@{weather.summary, default=`Limpo`}"
-        android:textColor="@android:color/white"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/precipValue" />
+        <TextView
+            android:id="@+id/maxLabelToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="MAX"
+            android:textColor="@color/half_white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/maxTempToday"
+            app:layout_constraintEnd_toStartOf="@+id/maxTempToday" />
 
-    <TextView
-        android:id="@+id/darkSkyAttribution"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/dark_sky_message"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/minTempToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp"
+            android:text="16"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/maxTempToday" />
 
-    <ImageView
-        android:id="@+id/refreshView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="refreshOnClick"
-        app:layout_constraintBottom_toTopOf="@+id/locationValue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/refresh" />
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/degreeMinTodayImage"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/minTempToday"
+            app:layout_constraintTop_toTopOf="@+id/minTempToday"
+            app:srcCompat="@drawable/degree" />
+
+        <TextView
+            android:id="@+id/minLabelToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="MIN"
+            android:textColor="@color/half_white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/minTempToday"
+            app:layout_constraintEnd_toEndOf="@+id/maxLabelToday" />
+
+        <ImageView
+            android:id="@+id/iconTodayImage"
+            android:layout_width="23dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/todayLabel"
+            app:srcCompat="@drawable/cloudy_night" />
+
+        <TextView
+            android:id="@+id/humidityTodayLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="10dp"
+            android:text="HUMIDADE"
+            android:textColor="@color/half_white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/minTempToday" />
+
+        <TextView
+            android:id="@+id/humidityToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="6dp"
+            android:text="0.88"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/humidityTodayLabel" />
+
+        <TextView
+            android:id="@+id/precipTodayLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
+            android:text="CHUVA/NEVE"
+            android:textColor="@color/half_white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/humidityToday" />
+
+        <TextView
+            android:id="@+id/precipToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="6dp"
+            android:text="35%"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/precipTodayLabel" />
+
+        <TextView
+            android:id="@+id/day2Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="28dp"
+            android:text="Sábado"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/locationLabel" />
+
+        <TextView
+            android:id="@+id/maxTempDay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="18dp"
+            android:text="26"
+            android:textColor="@android:color/white"
+            android:textSize="42sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/day2Label" />
+
+        <ImageView
+            android:id="@+id/degreeMaxDay2Image"
+            android:layout_width="18dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/maxTempDay2"
+            app:layout_constraintTop_toTopOf="@+id/maxTempDay2"
+            app:srcCompat="@drawable/degree" />
+
+        <TextView
+            android:id="@+id/maxLabelDay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="MAX"
+            android:textColor="@color/half_white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/maxTempDay2"
+            app:layout_constraintEnd_toStartOf="@+id/maxTempDay2" />
+
+        <ImageView
+            android:id="@+id/iconDay2Image"
+            android:layout_width="23dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/day2Label"
+            app:srcCompat="@drawable/fog" />
+
+        <TextView
+            android:id="@+id/minTempDay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp"
+            android:text="14"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/maxTempDay2" />
+
+        <ImageView
+            android:id="@+id/degreeMinDay2Image"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/minTempDay2"
+            app:layout_constraintTop_toTopOf="@+id/minTempDay2"
+            app:srcCompat="@drawable/degree" />
+
+        <TextView
+            android:id="@+id/minLabelDay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="MIN"
+            android:textColor="@color/half_white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/minTempDay2"
+            app:layout_constraintEnd_toEndOf="@+id/maxLabelDay2" />
+
+        <TextView
+            android:id="@+id/humidityDay2Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="10dp"
+            android:text="HUMIDADE"
+            android:textColor="@color/half_white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/minTempDay2" />
+
+        <TextView
+            android:id="@+id/humidityDay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="6dp"
+            android:text="0.73"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/humidityDay2Label" />
+
+        <TextView
+            android:id="@+id/precipDay2Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
+            android:text="CHUVA/NEVE"
+            android:textColor="@color/half_white"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/humidityDay2" />
+
+        <TextView
+            android:id="@+id/precipDay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="6dp"
+            android:text="45%"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/precipDay2Label" />
+
+        <TextView
+            android:id="@+id/day3Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="28dp"
+            android:text="Domingo"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/locationLabel" />
+
+        <TextView
+            android:id="@+id/maxTempDay3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="18dp"
+            android:text="21"
+            android:textColor="@android:color/white"
+            android:textSize="42sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/day3Label" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="18dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/maxTempDay3"
+            app:layout_constraintTop_toTopOf="@+id/maxTempDay3"
+            app:srcCompat="@drawable/degree" />
+
+        <ImageView
+            android:id="@+id/iconDay3Image"
+            android:layout_width="23dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/day3Label"
+            app:srcCompat="@drawable/clear_night" />
+
+        <TextView
+            android:id="@+id/maxLabelDay3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="MAX"
+            android:textColor="@color/half_white"
+            app:layout_constraintBottom_toBottomOf="@+id/maxTempDay3"
+            app:layout_constraintEnd_toStartOf="@+id/maxTempDay3" />
+
+        <TextView
+            android:id="@+id/minTempDay3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp"
+            android:text="11"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/maxTempDay3" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/minTempDay3"
+            app:layout_constraintTop_toTopOf="@+id/minTempDay3"
+            app:srcCompat="@drawable/degree" />
+
+        <TextView
+            android:id="@+id/minTempDay3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="MIN"
+            android:textColor="@color/half_white"
+            app:layout_constraintEnd_toEndOf="@+id/maxLabelDay3"
+            tools:layout_editor_absoluteY="231dp" />
+    </android.support.constraint.ConstraintLayout>
 </layout>
