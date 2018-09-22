@@ -134,7 +134,35 @@ public class CurrentWeather {
         return summary;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setSummary(String icon) {
+        switch(icon) {
+            case "rain":
+                this.summary = "Chuvoso";
+                break;
+            case "snow":
+                this.summary = "A nevar";
+                break;
+            case "sleet":
+                this.summary = "Aguaneve";
+                break;
+            case "wind":
+                this.summary = "Ventoso";
+                break;
+            case "fog":
+                this.summary = "Nevoeiro";
+                break;
+            case "cloudy":
+                this.summary = "Nebulado";
+                break;
+            case "partly-cloudy-day":
+                this.summary = "Parcialmente limpo";
+                break;
+            case "partly-cloudy-night":
+                this.summary = "Parcialmente limpo";
+                break;
+            default:
+                this.summary = "Limpo";
+                break;
+        }
     }
 }
