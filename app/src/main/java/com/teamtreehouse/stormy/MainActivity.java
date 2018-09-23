@@ -380,28 +380,28 @@ public class MainActivity extends AppCompatActivity {
 
         String dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
 
-        weeklyWeather.setCurrentWeatherSecondDay(getWeekDayDetails(data.get(0).toString()));
+        weeklyWeather.setCurrentWeatherSecondDay(getWeekDayDetails(data.get(1).toString()));
         weeklyWeather.getCurrentWeatherSecondDay().setDayOfWeek(dayOfWeek);
         Log.i(TAG, "Got second day's details (" + dayOfWeek + ")");
 
         calendar.add(Calendar.DAY_OF_WEEK, 1);
         date = calendar.getTime();
         dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
-        weeklyWeather.setCurrentWeatherThirdDay(getWeekDayDetails(data.get(1).toString()));
+        weeklyWeather.setCurrentWeatherThirdDay(getWeekDayDetails(data.get(2).toString()));
         weeklyWeather.getCurrentWeatherThirdDay().setDayOfWeek(dayOfWeek);
         Log.i(TAG, "Got third day's details (" + dayOfWeek + ")");
 
         calendar.add(Calendar.DAY_OF_WEEK, 1);
         date = calendar.getTime();
         dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
-        weeklyWeather.setCurrentWeatherFourthDay(getWeekDayDetails(data.get(2).toString()));
+        weeklyWeather.setCurrentWeatherFourthDay(getWeekDayDetails(data.get(3).toString()));
         weeklyWeather.getCurrentWeatherFourthDay().setDayOfWeek(dayOfWeek);
         Log.i(TAG, "Got fourth day's details (" + dayOfWeek + ")");
 
         calendar.add(Calendar.DAY_OF_WEEK, 1);
         date = calendar.getTime();
         dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
-        weeklyWeather.setCurrentWeatherFifthDay(getWeekDayDetails(data.get(3).toString()));
+        weeklyWeather.setCurrentWeatherFifthDay(getWeekDayDetails(data.get(4).toString()));
         weeklyWeather.getCurrentWeatherFifthDay().setDayOfWeek(dayOfWeek);
         Log.i(TAG, "Got fifth day's details (" + dayOfWeek + ")");
 

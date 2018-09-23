@@ -5,7 +5,10 @@
     <string name="error_button_ok">Ok</string>
     <string name="network_unavailable_message">Sorry, network not available</string>
     <string name="dark_sky_message"><a href="https://darksky.net/poweredby">Powered by Dark Sky</a></string>
-    <string name="todayMaxLabel">AGORA</string>
+    <string name="todayNowLabel">AGORA</string>
+    <string name="maxLabel">MAX</string>
     <string name="humidadeLabel">HUMIDADE</string>
     <string name="precipLabel">CHUVA/NEVE</string>
+    <string name="minLabel">MIN</string>
+    <string name="tempNowLabel">AGORA</string>
 </resources>
