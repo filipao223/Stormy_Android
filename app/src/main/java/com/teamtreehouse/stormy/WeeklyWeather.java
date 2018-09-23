@@ -1,6 +1,8 @@
 package com.teamtreehouse.stormy;
 
-public class WeeklyWeather {
+import java.io.Serializable;
+
+public class WeeklyWeather implements Serializable{
     //5 days
     private CurrentWeather currentWeatherSecondDay = new CurrentWeather();
     private CurrentWeather currentWeatherThirdDay = new CurrentWeather();

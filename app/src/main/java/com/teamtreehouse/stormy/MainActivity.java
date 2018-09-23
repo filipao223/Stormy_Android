@@ -2,6 +2,7 @@ package com.teamtreehouse.stormy;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -24,6 +25,8 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Address> list;
 
     private String locationName = "--";
+
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] permissionsGranted){
@@ -431,5 +436,10 @@ public class MainActivity extends AppCompatActivity {
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialogue");
+    }
+
+    public void sendMessage(View view){
+        Intent intent = new Intent(this, DetailsWeather.class);
+        startActivity(intent);
     }
 }
