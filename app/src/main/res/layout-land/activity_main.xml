@@ -16,15 +16,6 @@
         android:background="@color/appBackground"
         tools:context=".MainActivity">
 
-        <ImageView
-            android:id="@+id/degreeMaxTodayImage"
-            android:layout_width="18dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/maxTempToday"
-            app:layout_constraintTop_toTopOf="@+id/maxTempToday"
-            app:srcCompat="@drawable/degree" />
-
         <TextView
             android:id="@+id/todayLabel"
             android:layout_width="wrap_content"
@@ -91,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="18dp"
-            android:text="@{String.valueOf(weather.temperature), default=`28`}"
+            android:text="@{String.valueOf(Math.round(weather.temperature)), default=`28`}"
             android:textColor="@android:color/white"
             android:textSize="42sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -102,7 +93,7 @@
             android:id="@+id/degreeTodayImage"
             android:layout_width="18dp"
             android:layout_height="15dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/maxTempToday"
             app:layout_constraintTop_toTopOf="@+id/maxTempToday"
             app:srcCompat="@drawable/degree" />
@@ -211,7 +202,7 @@
             android:id="@+id/degreeMaxDay2Image"
             android:layout_width="18dp"
             android:layout_height="15dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/maxTempDay2"
             app:layout_constraintTop_toTopOf="@+id/maxTempDay2"
             app:srcCompat="@drawable/degree" />
@@ -255,7 +246,7 @@
             android:id="@+id/degreeMinDay2Image"
             android:layout_width="12dp"
             android:layout_height="10dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/minTempDay2"
             app:layout_constraintTop_toTopOf="@+id/minTempDay2"
             app:srcCompat="@drawable/degree" />
@@ -352,7 +343,7 @@
             android:id="@+id/degreeMaxDay3Image"
             android:layout_width="18dp"
             android:layout_height="15dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/maxTempDay3"
             app:layout_constraintTop_toTopOf="@+id/maxTempDay3"
             app:srcCompat="@drawable/degree" />
@@ -395,7 +386,7 @@
             android:id="@+id/degreeMinDay3Image"
             android:layout_width="12dp"
             android:layout_height="10dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/minTempDay3"
             app:layout_constraintTop_toTopOf="@+id/minTempDay3"
             app:srcCompat="@drawable/degree" />
@@ -490,7 +481,7 @@
             android:id="@+id/degreeMaxDay4Image"
             android:layout_width="18dp"
             android:layout_height="15dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/maxTempDay4"
             app:layout_constraintTop_toTopOf="@+id/maxTempDay4"
             app:srcCompat="@drawable/degree" />
@@ -533,7 +524,7 @@
             android:id="@+id/degreeMinDay4Image"
             android:layout_width="12dp"
             android:layout_height="10dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/minTempDay4"
             app:layout_constraintTop_toTopOf="@+id/minTempDay4"
             app:srcCompat="@drawable/degree" />
@@ -628,7 +619,7 @@
             android:id="@+id/degreeMaxDay5Image"
             android:layout_width="18dp"
             android:layout_height="15dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/maxTempDay5"
             app:layout_constraintTop_toTopOf="@+id/maxTempDay5"
             app:srcCompat="@drawable/degree" />
@@ -668,10 +659,10 @@
             app:layout_constraintTop_toBottomOf="@+id/maxTempDay5" />
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/degreeMinDay5Image"
             android:layout_width="12dp"
             android:layout_height="10dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             app:layout_constraintStart_toEndOf="@+id/minTempDay5"
             app:layout_constraintTop_toTopOf="@+id/minTempDay5"
             app:srcCompat="@drawable/degree" />
@@ -742,6 +733,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="25dp"
+            android:onClick="refreshOnClick"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintStart_toStartOf="@+id/guideline7"
             app:layout_constraintTop_toTopOf="parent"

@@ -2,6 +2,7 @@ package com.teamtreehouse.stormy;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
@@ -12,6 +13,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.Tag;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
@@ -66,12 +68,16 @@ public class MainActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient mFusedLocationClient;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     double latitude = 37.8267;
     double longitude = -122.4233;
+    boolean alreadyGotData = false;
 
     private List<Address> list;
 
-    private String locationName = "Alcatraz Island, CA";
+    private String locationName = "--";
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] permissionsGranted){
@@ -85,9 +91,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+
+        //Check if coordinates were saved
+        Log.i(TAG, "Checking if values were saved");
+        if (sharedPreferences.contains("latitude") && sharedPreferences.contains("longitude") && sharedPreferences.contains("locationName")){
+            //Get the data then
+            latitude = Double.longBitsToDouble(sharedPreferences.getLong("latitude", 0));
+            longitude = Double.longBitsToDouble(sharedPreferences.getLong("longitude", 0));
+            locationName = sharedPreferences.getString("locationName", "Null");
+            Log.i(TAG, "Getting values from SharedPreferences \n(Lat: " + latitude + ", long: " + longitude + ", name: " + locationName + ")");
+            alreadyGotData = true;
+        }
+        else Log.i(TAG, "Values were not saved");
+
         //Check if permissions were already granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_DENIED){
+            Log.i(TAG, "No permission yet");
             //Request permission
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -96,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             onRequestPermissionsResult(1, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, new int[] {1});
         }
         else {
+            Log.i(TAG, "Already have necessary permission");
             //Skip to the weather
             getForecast();
         }
@@ -151,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
                             }catch(IOException e){
                                 Log.e(TAG, "Caught IOException: " + e);
                             }
+
+                            alreadyGotData = true;
                         }
                     }
                 })
@@ -160,11 +184,24 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG, "No location could be returned");
                     }
                 });
+        Log.v(TAG, "Went past getlastlocation");
     }
 
     private void getForecast() {
 
-        checkPermissionAndGetLocation();
+        Log.i(TAG, "BEFORE CHECK PERMISSION AND GET LOCATION\n");
+        if (!alreadyGotData) checkPermissionAndGetLocation();
+        Log.i(TAG, "AFTER CHECK PERMISSION AND GET LOCATION\n");
+
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        //Save values
+        Log.i(TAG, "Saving values to SharedPreferences \n(Lat: " + latitude + ", long: " + longitude + ", name: " + locationName + ")");
+        editor.putLong("latitude", Double.doubleToRawLongBits(latitude));
+        editor.putLong("longitude", Double.doubleToRawLongBits(longitude));
+        editor.putString("locationName", locationName);
+        editor.apply();
 
         final ActivityMainBinding binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
 
@@ -220,7 +257,8 @@ public class MainActivity extends AppCompatActivity {
                                 currentWeather.getHumidity(),
                                 currentWeather.getPrecipChance(),
                                 currentWeather.getSummary(),
-                                currentWeather.getTimezone()
+                                currentWeather.getTimezone(),
+                                currentWeather.getDayOfWeek()
                         );
 
                         binding.setWeather(displayWeather);
@@ -229,8 +267,12 @@ public class MainActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Drawable drawable = getResources().getDrawable(displayWeather.getIconID());
-                                    iconImageView.setImageDrawable(drawable);
+                                    try{
+                                        Drawable drawable = getResources().getDrawable(displayWeather.getIconID());
+                                        iconImageView.setImageDrawable(drawable);
+                                    } catch (NullPointerException e){
+                                        Log.e(TAG, "Caught NullPointerException while updating portrait icon: " + e);
+                                    }
                                 }
                             });
                         }
@@ -248,16 +290,20 @@ public class MainActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Drawable drawable = getResources().getDrawable(displayWeather.getIconID());
-                                    landIconTodayImageView.setImageDrawable(drawable);
-                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherSecondDay().getIconID());
-                                    landIconDay2ImageView.setImageDrawable(drawable);
-                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherThirdDay().getIconID());
-                                    landIconDay3ImageView.setImageDrawable(drawable);
-                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherFourthDay().getIconID());
-                                    landIconDay4ImageView.setImageDrawable(drawable);
-                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherFifthDay().getIconID());
-                                    landIconDay5ImageView.setImageDrawable(drawable);
+                                    try{
+                                        Drawable drawable = getResources().getDrawable(displayWeather.getIconID());
+                                        landIconTodayImageView.setImageDrawable(drawable);
+                                        drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherSecondDay().getIconID());
+                                        landIconDay2ImageView.setImageDrawable(drawable);
+                                        drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherThirdDay().getIconID());
+                                        landIconDay3ImageView.setImageDrawable(drawable);
+                                        drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherFourthDay().getIconID());
+                                        landIconDay4ImageView.setImageDrawable(drawable);
+                                        drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherFifthDay().getIconID());
+                                        landIconDay5ImageView.setImageDrawable(drawable);
+                                    } catch (NullPointerException e){
+                                        Log.e(TAG, "Caught NullPointerException while updating landscape icons: " + e);
+                                    }
                                 }
                             });
                         }
@@ -377,6 +423,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshOnClick(View v){
+        alreadyGotData = false;
         Toast.makeText(this, "Refreshing data", Toast.LENGTH_LONG).show();
         getForecast();
     }

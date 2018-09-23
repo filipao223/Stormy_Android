@@ -23,7 +23,7 @@ public class CurrentWeather {
     }
 
     public CurrentWeather(String locationLabel, String icon, long time, double temperature, double humidity,
-                          double precipChance, String summary, String timezone) {
+                          double precipChance, String summary, String timezone, String dayOfWeek) {
         this.locationLabel = locationLabel;
         this.icon = icon;
         this.time = time;
@@ -32,6 +32,7 @@ public class CurrentWeather {
         this.precipChance = precipChance;
         this.summary = summary;
         this.timezone = timezone;
+        this.dayOfWeek = dayOfWeek;
     }
 
     /*---Getters and setters-----*/
