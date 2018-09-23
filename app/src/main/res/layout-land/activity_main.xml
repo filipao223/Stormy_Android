@@ -10,6 +10,7 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/appBackground"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="28dp"
-            android:text="Hoje"
+            android:text="@{weather.dayOfWeek, default=`Hoje`}"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -78,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="22dp"
-            android:text="Condeixa-a-nova"
+            android:text="@{weather.locationLabel, default=`Condeixa-a-nova`}"
             android:textColor="@color/half_white"
             android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="18dp"
-            android:text="28"
+            android:text="@{String.valueOf(weather.temperature), default=`28`}"
             android:textColor="@android:color/white"
             android:textSize="42sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -112,44 +113,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"
-            android:text="MAX"
+            android:text="@string/todayMaxLabel"
             android:textColor="@color/half_white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/maxTempToday"
             app:layout_constraintEnd_toStartOf="@+id/maxTempToday" />
-
-        <TextView
-            android:id="@+id/minTempToday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="20dp"
-            android:text="16"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/maxTempToday" />
-
-        <ImageView
-            android:id="@+id/degreeMinTodayImage"
-            android:layout_width="12dp"
-            android:layout_height="10dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/minTempToday"
-            app:layout_constraintTop_toTopOf="@+id/minTempToday"
-            app:srcCompat="@drawable/degree" />
-
-        <TextView
-            android:id="@+id/minLabelToday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="MIN"
-            android:textColor="@color/half_white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/minTempToday"
-            app:layout_constraintEnd_toEndOf="@+id/maxLabelToday" />
 
         <ImageView
             android:id="@+id/iconTodayImage"
@@ -166,13 +134,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="10dp"
-            android:text="HUMIDADE"
+            android:layout_marginTop="12dp"
+            android:text="@string/humidadeLabel"
             android:textColor="@color/half_white"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/minTempToday" />
+            app:layout_constraintTop_toBottomOf="@+id/maxTempToday" />
 
         <TextView
             android:id="@+id/humidityToday"
@@ -180,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="6dp"
-            android:text="0.88"
+            android:text="@{String.valueOf(weather.humidity), default=`0.88`}"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -193,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="12dp"
-            android:text="CHUVA/NEVE"
+            android:text="@string/precipLabel"
             android:textColor="@color/half_white"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -206,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="6dp"
-            android:text="35%"
+            android:text="@{String.valueOf(weather.precipChance) + `%`, default=`43%`}"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -219,7 +187,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="28dp"
-            android:text="Sábado"
+            android:text="@{weatherWeekly.currentWeatherSecondDay.dayOfWeek, default=`Sábado`}"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"

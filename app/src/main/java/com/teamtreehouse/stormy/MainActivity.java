@@ -3,6 +3,7 @@ package com.teamtreehouse.stormy;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -12,12 +13,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
     private WeeklyWeather weeklyWeather = new WeeklyWeather();
 
     private ImageView iconImageView;
+    private ImageView landIconTodayImageView;
+    private ImageView landIconDay2ImageView;
+    private ImageView landIconDay3ImageView;
+    private ImageView landIconDay4ImageView;
+    private ImageView landIconDay5ImageView;
 
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -160,10 +168,22 @@ public class MainActivity extends AppCompatActivity {
 
         final ActivityMainBinding binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
 
-        TextView darkSky = findViewById(R.id.darkSkyAttribution);
-        darkSky.setMovementMethod(LinkMovementMethod.getInstance());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            TextView darkSky = findViewById(R.id.darkSkyAttribution);
+            darkSky.setMovementMethod(LinkMovementMethod.getInstance());
+        }
 
-        iconImageView = findViewById(R.id.iconImageView);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            iconImageView = findViewById(R.id.iconImageView);
+        }
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            landIconTodayImageView = findViewById(R.id.iconTodayImage);
+            landIconDay2ImageView = findViewById(R.id.iconDay2Image);
+            landIconDay3ImageView = findViewById(R.id.iconDay3Image);
+            landIconDay4ImageView = findViewById(R.id.iconDay4Image);
+            landIconDay5ImageView = findViewById(R.id.iconDay5Image);
+        }
 
         String apiKey = "8b061d71cc593f087908cbd369a353b2";
 
@@ -205,13 +225,15 @@ public class MainActivity extends AppCompatActivity {
 
                         binding.setWeather(displayWeather);
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Drawable drawable = getResources().getDrawable(displayWeather.getIconID());
-                                iconImageView.setImageDrawable(drawable);
-                            }
-                        });
+                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Drawable drawable = getResources().getDrawable(displayWeather.getIconID());
+                                    iconImageView.setImageDrawable(drawable);
+                                }
+                            });
+                        }
 
                         weeklyWeather = getWeeklyDetails(jsonData);
 
@@ -222,7 +244,25 @@ public class MainActivity extends AppCompatActivity {
                                 weeklyWeather.getCurrentWeatherFifthDay()
                         );
 
-                        binding.setWeatherWeekly(weeklyWeather);
+                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Drawable drawable = getResources().getDrawable(displayWeather.getIconID());
+                                    landIconTodayImageView.setImageDrawable(drawable);
+                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherSecondDay().getIconID());
+                                    landIconDay2ImageView.setImageDrawable(drawable);
+                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherThirdDay().getIconID());
+                                    landIconDay3ImageView.setImageDrawable(drawable);
+                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherFourthDay().getIconID());
+                                    landIconDay4ImageView.setImageDrawable(drawable);
+                                    drawable = getResources().getDrawable(weeklyWeather.getCurrentWeatherFifthDay().getIconID());
+                                    landIconDay5ImageView.setImageDrawable(drawable);
+                                }
+                            });
+                        }
+
+                        binding.setWeatherWeekly(displayWeeklyWeather);
 
                         if (!response.isSuccessful()) {
                             alertUserAboutError();
@@ -243,16 +283,11 @@ public class MainActivity extends AppCompatActivity {
         String timezone = forecast.getString("timezone");
         Log.i(TAG, "From JSON: " + timezone);
 
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-
-        String dayOfWeek = new SimpleDateFormat("EE", new Locale("pt", "PT")).format(date.getTime());
-
         JSONObject currently = forecast.getJSONObject("currently");
 
         CurrentWeather currentWeather = new CurrentWeather();
 
-        currentWeather.setDayOfWeek(dayOfWeek);
+        currentWeather.setDayOfWeek("Hoje");
         currentWeather.setLocationLabel(locationName);
         currentWeather.setTime(currently.getLong("time"));
         currentWeather.setIcon(currently.getString("icon"));
@@ -275,8 +310,8 @@ public class MainActivity extends AppCompatActivity {
 
         currentWeather.setIcon(forecast.getString("icon"));
         currentWeather.setSummary(forecast.getString("summary"));
-        currentWeather.setTempMax(forecast.getDouble("temperatureHigh"));
-        currentWeather.setTempMin(forecast.getDouble("temperatureLow"));
+        currentWeather.setTempMax((forecast.getDouble("temperatureHigh")-32)/1.8);
+        currentWeather.setTempMin((forecast.getDouble("temperatureLow")-32)/1.8);
         currentWeather.setPrecipChance(forecast.getDouble("precipProbability"));
         currentWeather.setHumidity(forecast.getDouble("humidity"));
 
