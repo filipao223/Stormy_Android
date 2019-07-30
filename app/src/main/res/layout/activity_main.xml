@@ -195,14 +195,5 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/refresh" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:onClick="sendMessage"
-            android:text="Details"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="288dp" />
     </android.support.constraint.ConstraintLayout>
 </layout>
