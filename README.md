@@ -1,2 +1,2 @@
 # Stormy_Android
-App de aprendizagem Android. Fonte: teamtreehouse.com
+App de meteorologia Android. Fonte: teamtreehouse.com
